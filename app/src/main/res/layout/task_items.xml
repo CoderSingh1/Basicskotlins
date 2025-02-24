@@ -5,9 +5,9 @@
     android:layout_height="90dp">
 
     <TextView
-        android:id="@+id/TaskItems"
+        android:id="@+id/taskTitle"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="Task1"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -15,12 +15,12 @@
         android:padding="10dp"
         android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+        app:layout_constraintEnd_toStartOf="@+id/cbDone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/cbDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
