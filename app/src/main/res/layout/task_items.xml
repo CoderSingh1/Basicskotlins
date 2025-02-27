@@ -13,7 +13,6 @@
         android:textStyle="bold"
         android:layout_marginHorizontal="8dp"
         android:padding="10dp"
-        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cbDone"
         app:layout_constraintStart_toStartOf="parent"
