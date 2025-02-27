@@ -1,6 +1,5 @@
 package com.example.todo_list
 
-import android.content.Context
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
@@ -11,44 +10,38 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TodoAdapter(
     private val todos: MutableList<Todo>
-  ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
-    class TodoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+    class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskTitle: TextView = itemView.findViewById(R.id.taskTitle)
-        val cbDone : CheckBox = itemView.findViewById(R.id.cbDone)
+        val cbDone: CheckBox = itemView.findViewById(R.id.cbDone)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        return TodoViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.task_items,
-                parent,
-                false
-            )
-        )
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_items, parent, false)
+        return TodoViewHolder(view)
     }
 
-    fun addTodo(todo : Todo){
+    fun addTodo(todo: Todo) {
         todos.add(todo)
-        notifyItemInserted(todos.size-1)
+        notifyItemInserted(todos.size - 1)
     }
 
-    fun deleteTodo(){
-        todos.removeAll { todo ->  todo.isChecked}
+    fun deleteTodo() {
+        todos.removeAll { todo -> todo.isChecked }
         notifyDataSetChanged()
     }
 
 
-    private fun strikeThroughToggle(taskTitle : TextView, isChecked : Boolean){
-        if(isChecked){
+    private fun strikeThroughToggle(taskTitle: TextView, isChecked: Boolean) {
+        if (isChecked) {
             taskTitle.paintFlags = taskTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
-        }
-        else{
+        } else {
             taskTitle.paintFlags = taskTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        val curTodo =  todos[position]
+        val curTodo = todos[position]
         holder.itemView.apply {
             holder.taskTitle.text = curTodo.title
             holder.cbDone.isChecked = curTodo.isChecked

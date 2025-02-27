@@ -13,15 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var todoAdapter : TodoAdapter
-    private lateinit var taskList: MutableList<Todo>
+    private lateinit var todoAdapter: TodoAdapter
+    private var taskList = mutableListOf<Todo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        todoAdapter = TodoAdapter(mutableListOf())
 
         val taskRV = findViewById<RecyclerView>(R.id.taskRV)
         val addButton = findViewById<Button>(R.id.addButton)
@@ -29,22 +27,22 @@ class MainActivity : AppCompatActivity() {
         val taskET = findViewById<EditText>(R.id.taskET)
 
 
+        todoAdapter = TodoAdapter(taskList)
         taskRV.adapter = todoAdapter
 
         taskRV.layoutManager = LinearLayoutManager(this)
 
-        addButton.setOnClickListener{
-            if(taskList.isNotEmpty()){
-                taskList.add(Todo(taskET.text.toString(),false))
-                TodoAdapter(taskList)
+        addButton.setOnClickListener {
+            val taskText = taskET.text.toString().trim()
+            if (taskText.isNotEmpty()) {
+                val todo = Todo(taskText, false)
+                todoAdapter.addTodo(todo)  // Use the adapter's function to add the task
+                taskET.text.clear()
             }
         }
 
         deleteButton.setOnClickListener {
             todoAdapter.deleteTodo()
         }
-
-
-
-        }
     }
+}
