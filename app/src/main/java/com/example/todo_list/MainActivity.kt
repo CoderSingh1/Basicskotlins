@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("TodoPrefs", Context.MODE_PRIVATE)
         taskRV.layoutManager = LinearLayoutManager(this)
 
-        //taskList = loadTasks()
+
+
+        taskList = loadTasks()
 
 
         addButton.setOnClickListener {
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 val todo = Todo(taskText, false)
                 todoAdapter.addTodo(todo)  // Use the adapter's function to add the task
                 taskET.text.clear()
+                saveTasks()
             }
         }
 
@@ -52,30 +55,31 @@ class MainActivity : AppCompatActivity() {
             todoAdapter.deleteTodo()
         }
 
-        fun saveTasks() {
-            val editor = sharedPreferences.edit()
-            val jsonArray = JSONArray()
 
-            for (task in taskList) {
-                //jsonArray.put(task.task)  // Save only the task text
-            }
+    }
+    private fun saveTasks() {
+        val editor = sharedPreferences.edit()
+        val jsonArray = JSONArray()
 
-            editor.putString("tasks", jsonArray.toString())
-            editor.apply()
+        for (task in taskList) {
+            jsonArray.put(task)  // Save only the task text
         }
 
+        editor.putString("tasks", jsonArray.toString())
+        editor.apply()
+    }
 
-        // Load task list from SharedPreferences
-        fun loadTasks(): MutableList<Todo> {
-            val json = sharedPreferences.getString("tasks", null) ?: return mutableListOf()
-            val jsonArray = JSONArray(json)
 
-            val savedTasks = mutableListOf<Todo>()
-            for (i in 0 until jsonArray.length()) {
-                savedTasks.add(Todo(jsonArray.getString(i), false))
-            }
+    // Load task list from SharedPreferences
+    private fun loadTasks(): MutableList<Todo> {
+        val json = sharedPreferences.getString("tasks", null) ?: return mutableListOf()
+        val jsonArray = JSONArray(json)
 
-            return savedTasks
+        val savedTasks = mutableListOf<Todo>()
+        for (i in 0 until jsonArray.length()) {
+            savedTasks.add(Todo(jsonArray.getString(i), false))
         }
+
+        return savedTasks
     }
 }
